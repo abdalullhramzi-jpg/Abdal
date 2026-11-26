@@ -1,0 +1,18 @@
+{
+  "name": "شبكة شباب نت",
+  "short_name": "شبكة شباب نت",
+  "description": "تطبيق إدارة شبكة كروت الإنترنت: زبائن، ديون، سداد، تقارير، وطباعة — يعمل أوفلاين",
+  "dir": "rtl",
+  "lang": "ar",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#0e7490",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

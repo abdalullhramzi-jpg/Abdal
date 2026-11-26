@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e7490">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="شبكة شباب نت">
+<title>شبكة شباب نت</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#0d9488;--navy:#1e3a5f;--orange:#f97316;--bg:#f1f5f9;--card:#fff;--line:#e2e8f0;--danger:#dc2626;--ok:#16a34a}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:#0f172a;padding-bottom:80px;-webkit-tap-highlight-color:transparent}
+.num{unicode-bidi:isolate;direction:ltr;display:inline-block}
+.app-bar{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(15,23,42,.25)}
+.app-bar img{width:40px;height:40px;border-radius:10px;background:#fff;padding:2px}
+.app-bar h1{font-size:16.5px;flex:1}
+.icon-btn{background:rgba(255,255,255,.18);border:0;color:#fff;width:38px;height:38px;border-radius:11px;font-size:17px;cursor:pointer}
+.page{display:none;padding:14px;max-width:760px;margin:0 auto}
+.page.active{display:block;animation:fade .18s}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.stat{background:var(--card);border-radius:14px;padding:14px;border:1px solid var(--line)}
+.stat .l{font-size:12.5px;color:#64748b}
+.stat .v{font-size:22px;font-weight:700;margin-top:4px}
+.stat.c1 .v{color:var(--danger)}.stat.c2 .v{color:var(--navy)}.stat.c3 .v{color:var(--orange)}.stat.c4 .v{color:var(--ok)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+h2.sec{font-size:14.5px;margin:2px 0 10px;color:var(--navy)}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.quick button{border:1px solid var(--line);border-radius:14px;padding:13px 6px;background:var(--card);font-weight:700;cursor:pointer;font-size:12.5px;color:var(--navy)}
+.quick button b{display:block;font-size:20px;margin-bottom:4px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;font-size:13px;cursor:pointer;white-space:nowrap;color:#334155}
+.chip.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.search{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:12px;font-size:14px;margin-bottom:10px;background:#fff}
+.search:focus{outline:none;border-color:var(--teal)}
+.cust{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;cursor:pointer}
+.cust:active{background:#f8fafc}
+.av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--navy));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px}
+.cust .info,.dhead .info{flex:1;min-width:0}
+.n{font-weight:700;font-size:14.5px}
+.m{font-size:12px;color:#64748b;margin-top:2px}
+.badge{border-radius:20px;padding:4px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.badge.debt{background:#fee2e2;color:var(--danger)}
+.badge.ok{background:#dcfce7;color:var(--ok)}
+.badge.zero{background:#f1f5f9;color:#64748b}
+.btn{border:0;border-radius:12px;padding:12px 14px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:inherit}
+.btn.p{background:var(--teal);color:#fff;width:100%}
+.btn.s{background:#ccfbf1;color:#0f766e}
+.btn.o{background:#ffedd5;color:#c2410c}
+.btn.d{background:#fee2e2;color:var(--danger)}
+.btn.gh{background:#fff;border:1px solid var(--line);color:var(--navy)}
+.row{display:flex;gap:8px}.row>*{flex:1}
+label.f{display:block;font-size:12.5px;color:#475569;margin:10px 0 4px;font-weight:700}
+input.f,select.f,textarea.f{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;background:#fff;color:#0f172a}
+input.f:focus,select.f:focus{outline:none;border-color:var(--teal)}
+.calc{display:flex;justify-content:space-between;align-items:center;background:#f0fdfa;border:1px dashed var(--teal);border-radius:12px;padding:10px 12px;margin-top:10px;font-size:14px;color:#134e4a}
+.calc b.num{font-size:17px;color:var(--navy)}
+.nav{position:fixed;bottom:0;right:0;left:0;background:#fff;border-top:1px solid var(--line);display:flex;z-index:30;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -2px 10px rgba(15,23,42,.05)}
+.nav button{flex:1;border:0;background:none;padding:8px 2px 10px;font-size:11px;color:#94a3b8;cursor:pointer;font-family:inherit}
+.nav button .i{font-size:20px;display:block;margin-bottom:2px}
+.nav button.on{color:var(--teal);font-weight:700}
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.modal.open{display:flex}
+.sheet{background:#fff;width:100%;max-width:560px;border-radius:20px 20px 0 0;padding:18px;max-height:88vh;overflow:auto}
+.sheet h3{font-size:16px;color:var(--navy);margin-bottom:12px}
+table.st{width:100%;border-collapse:collapse;font-size:12px;background:#fff}
+table.st th{background:#f1f5f9;padding:8px 5px;color:#475569;font-size:11px;white-space:nowrap}
+table.st td{padding:8px 5px;border-top:1px solid var(--line);text-align:center;white-space:nowrap}
+.toast{position:fixed;bottom:92px;right:50%;transform:translateX(50%);background:#0f172a;color:#fff;padding:10px 18px;border-radius:12px;font-size:13.5px;z-index:90;opacity:0;transition:.25s;pointer-events:none;max-width:90%;text-align:center}
+.toast.show{opacity:1}
+.lock{position:fixed;inset:0;background:linear-gradient(160deg,var(--navy),var(--teal));z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:14px;text-align:center;padding:20px}
+.lock.open{display:flex}
+.lock img{width:92px;height:92px;border-radius:22px;background:#fff;padding:6px}
+.hidden{display:none!important}
+.dhead{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.t1{font-weight:700;font-size:13.5px}
+.t2{font-size:11.5px;color:#64748b;margin-top:3px}
+.green{color:var(--ok)}.red{color:var(--danger)}.orange{color:#c2410c}
+.txrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.txrow:last-child{border-bottom:0}
+.empty{text-align:center;color:#94a3b8;padding:26px 10px;font-size:13.5px}
+.msg-preview{background:#e7f6f2;border:1px solid #b8e6dc;border-radius:12px;padding:12px;font-size:13px;white-space:pre-wrap;line-height:1.9;margin:10px 0}
+.wa-msg{direction:rtl;text-align:right}
+#print-area{display:none}
+@media print{
+ body{padding:0;background:#fff}
+ body>*:not(#print-area){display:none!important}
+ #print-area{display:block!important;font-family:'Noto Kufi Arabic',Tahoma,sans-serif}
+ #print-area h2{text-align:center;margin-bottom:4px}
+ #print-area .phead{text-align:center;border-bottom:2px solid #000;padding-bottom:6px;margin-bottom:8px}
+ #print-area table{width:100%;border-collapse:collapse;font-size:11px}
+ #print-area th,#print-area td{border:1px solid #333;padding:4px;text-align:center}
+ #print-area .pfoot{text-align:center;margin-top:10px}
+}
+</style>
+</head>
+<body>
+<header class="app-bar">
+ <img src="icons/icon-192.png" alt="شعار التطبيق" id="bar-logo">
+ <h1 id="netTitle">شبكة شباب نت</h1>
+ <button class="icon-btn" onclick="openLogin()" title="الحساب">👤</button>
+</header>
+
+<main>
+<!-- لوحة التحكم -->
+<section id="pg-dash" class="page">
+ <div class="stats">
+  <div class="stat c1"><div class="l">إجمالي الديون (ريال)</div><div class="v" id="st-total">0</div></div>
+  <div class="stat c2"><div class="l">عدد المدينين</div><div class="v" id="st-debtors">0</div></div>
+  <div class="stat c3"><div class="l">ديون اليوم (ريال)</div><div class="v" id="st-tdebt">0</div></div>
+  <div class="stat c4"><div class="l">سداد اليوم (ريال)</div><div class="v" id="st-tpaid">0</div></div>
+ </div>
+ <div class="quick">
+  <button onclick="newCustomerFrom('cust')"><b>＋</b>زبون جديد</button>
+  <button onclick="go('add');setMode('purchase')"><b>📶</b>طلب كروت</button>
+  <button onclick="go('add');setMode('payment')"><b>💵</b>تسجيل سداد</button>
+ </div>
+ <div class="card"><h2 class="sec">آخر الحركات</h2><div id="recent-list"></div></div>
+</section>
+
+<!-- الزبائن -->
+<section id="pg-cust" class="page">
+ <input id="q" class="search" placeholder="🔍 بحث بالاسم أو رقم الجوال..." oninput="renderCust()">
+ <div class="chips">
+  <button class="chip on" data-f="all" onclick="setFilter('all')">الكل</button>
+  <button class="chip" data-f="debt" onclick="setFilter('debt')">عليهم ديون</button>
+  <button class="chip" data-f="paid" onclick="setFilter('paid')">مسددون</button>
+  <button class="chip" data-f="top" onclick="setFilter('top')">الأعلى ديناً</button>
+ </div>
+ <div id="cust-list"></div>
+ <button class="btn p" style="margin-top:6px" onclick="newCustomerFrom('cust')">＋ زبون جديد</button>
+</section>
+
+<!-- إضافة حركة -->
+<section id="pg-add" class="page">
+ <div class="row" style="margin-bottom:10px">
+  <button id="bm-purchase" class="btn s" onclick="setMode('purchase')">📶 طلب كروت</button>
+  <button id="bm-payment" class="btn gh" onclick="setMode('payment')">💵 تسجيل سداد (له)</button>
+ </div>
+ <label class="f">الزبون</label>
+ <select id="cust-select" class="f"></select>
+ <button class="btn gh" style="width:100%;margin-top:8px" onclick="newCustomerFrom('add')">＋ زبون جديد</button>
+ <div id="purchase-fields">
+  <label class="f">كمية الكروت المطلوبة</label>
+  <input id="qty" class="f" type="number" min="1" step="1" inputmode="numeric" dir="ltr" oninput="recalc()" placeholder="مثال: 10">
+  <label class="f">سعر الكرت الواحد (ريال)</label>
+  <input id="price" class="f" type="number" min="0" step="any" inputmode="decimal" dir="ltr" oninput="recalc()">
+  <div class="calc"><span>الإجمالي (الكمية × السعر)</span><b class="num" id="total-show">0</b></div>
+ </div>
+ <div id="payment-fields" class="hidden">
+  <label class="f">المبلغ المسدد (ريال)</label>
+  <input id="pay-amt" class="f" type="number" min="0" step="any" inputmode="decimal" dir="ltr" placeholder="0">
+ </div>
+ <label class="f">المبلغ المدفوع (ريال)</label>
+ <input id="paid" class="f" type="number" min="0" step="any" inputmode="decimal" dir="ltr" oninput="recalc()" placeholder="0">
+ <div class="calc"><span>المتبقي المطلوب (الإجمالي − المدفوع)</span><b class="num" id="rem-show">0</b></div>
+ <label class="f">ملاحظة (اختياري)</label>
+ <input id="note" class="f" placeholder="ملاحظة sobre العملية">
+ <button class="btn p" style="margin-top:14px" onclick="saveTx()">💾 حفظ العملية</button>
+</section>
+
+<!-- الديون المتأخرة -->
+<section id="pg-debt" class="page">
+ <div class="card" style="background:#fff7ed;border-color:#fed7aa"><span style="font-size:13px;color:#9a3412">⏰ الحركات المفتوحة (لها متبقي) الأقدم من <b id="od-days">7</b> أيام — تذكير الزبون عبر واتساب من الزر.</span></div>
+ <div id="debt-list"></div>
+</section>
+
+<!-- تفاصيل الزبون -->
+<section id="pg-detail" class="page">
+ <button class="btn gh" onclick="go('cust')" style="margin-bottom:10px;padding:9px 14px">← رجوع للزبائن</button>
+ <div class="card">
+  <div class="dhead">
+   <div class="av" id="det-av">؟</div>
+   <div class="info"><div class="n" id="det-name"></div><div class="m" id="det-info"></div></div>
+  </div>
+  <div class="calc"><span>الرصيد الحالي (عليه)</span><b class="num" id="det-balance">0</b></div>
+ </div>
+ <div class="row">
+  <button class="btn s" onclick="quickTx('purchase')">📶 طلب كروت</button>
+  <button class="btn o" onclick="quickTx('payment')">💵 تسجيل سداد</button>
+ </div>
+ <div class="row" style="margin-top:8px">
+  <button class="btn gh" onclick="printStatement('t')">🖨️ حرارية 78مم</button>
+  <button class="btn gh" onclick="printStatement('a4')">🖨️ A4</button>
+ </div>
+ <div class="row" style="margin-top:8px">
+  <button class="btn gh" onclick="waChat()">💬 واتساب</button>
+  <button class="btn gh" onclick="btPrintStatement()">🖨️ بلوتوث (تجربة)</button>
+ </div>
+ <div class="card" style="margin-top:10px">
+  <h2 class="sec">كشف الحساب</h2>
+  <div style="overflow-x:auto"><table class="st">
+   <thead><tr><th>التاريخ</th><th>البيان</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th>الرصيد</th></tr></thead>
+   <tbody id="st-list"></tbody>
+  </table></div>
+ </div>
+</section>
+
+<!-- الإعدادات -->
+<section id="pg-set" class="page">
+ <div class="card">
+  <h2 class="sec">بيانات الشبكة</h2>
+  <label class="f">اسم الشبكة</label><input id="set-name" class="f">
+  <label class="f">رقم الجوال</label><input id="set-phone" class="f" dir="ltr" style="text-align:right" inputmode="tel">
+  <label class="f">عبارة ختامية</label><input id="set-closing" class="f">
+  <label class="f">سعر الكرت الافتراضي (ريال)</label><input id="set-price" class="f" type="number" min="0" dir="ltr" style="text-align:right" inputmode="decimal">
+  <label class="f">مفتاح الدولة للواتساب (مثال: 967)</label><input id="set-cc" class="f" dir="ltr" style="text-align:right" inputmode="numeric">
+  <label class="f">حد تأخر الدين (أيام)</label><input id="set-overdue" class="f" type="number" min="1" dir="ltr" style="text-align:right" inputmode="numeric">
+  <button class="btn p" style="margin-top:12px" onclick="saveSettingsUI()">💾 حفظ الإعدادات</button>
+ </div>
+ <div class="card">
+  <h2 class="sec">الدخول والحماية</h2>
+  <label class="f" style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="set-lock" style="width:auto"> قفل التطبيق عند الفتح (بصمة أو كلمة مرور)</label>
+  <div class="row" style="margin-top:10px">
+   <button class="btn s" onclick="enrollFingerprint()">🖐️ تسجيل البصمة</button>
+   <button class="btn gh" onclick="setPassword()">🔑 كلمة المرور</button>
+  </div>
+  <div id="login-status" class="m" style="margin-top:10px"></div>
+  <button class="btn gh" style="width:100%;margin-top:8px" onclick="openLogin()">👤 تسجيل الدخول (Google / بريد إلكتروني)</button>
+  <div class="row" style="margin-top:8px">
+   <button class="btn gh" onclick="cloudPush()">☁️ رفع نسخة سحابية</button>
+   <button class="btn gh" onclick="cloudPull()">⬇️ جلب النسخة السحابية</button>
+  </div>
+ </div>
+ <div class="card">
+  <h2 class="sec">النسخ الاحتياطي والبيانات</h2>
+  <div class="row">
+   <button class="btn s" onclick="backup()">⬇️ تنزيل نسخة احتياطية</button>
+   <button class="btn o" onclick="$('file-restore').click()">⬆️ استرجاع نسخة</button>
+  </div>
+  <input type="file" id="file-restore" accept=".json" class="hidden" onchange="restore(event)">
+  <button class="btn d" style="width:100%;margin-top:10px" onclick="wipeAll()">🗑️ حذف كل البيانات</button>
+ </div>
+ <div class="card">
+  <h2 class="sec">التطبيق</h2>
+  <button id="btn-install" class="btn p hidden" onclick="installApp()">📱 تثبيت التطبيق على الشاشة الرئيسية</button>
+  <p class="m" style="margin-top:8px">الإصدار 1.0 — يعمل بالكامل بدون إنترنت، البيانات محفوظة على جهازك.</p>
+ </div>
+</section>
+</main>
+
+<nav class="nav">
+ <button data-page="dash" class="on" onclick="go('dash')"><span class="i">📊</span>الرئيسية</button>
+ <button data-page="cust" onclick="go('cust')"><span class="i">👥</span>الزبائن</button>
+ <button data-page="add" onclick="go('add')"><span class="i">➕</span>حركة جديدة</button>
+ <button data-page="debt" onclick="go('debt')"><span class="i">⏰</span>متأخرة</button>
+ <button data-page="set" onclick="go('set')"><span class="i">⚙️</span>إعدادات</button>
+</nav>
+
+<!-- مودال الزبون -->
+<div class="modal" id="modal-customer" onclick="if(event.target===this)closeModal('modal-customer')">
+ <div class="sheet">
+  <h3 id="cust-modal-title">زبون جديد</h3>
+  <label class="f">الاسم *</label><input id="f-name" class="f">
+  <label class="f">رقم الواتساب</label><input id="f-phone" class="f" dir="ltr" style="text-align:right" inputmode="tel">
+  <label class="f">العنوان (الحي / الشارع)</label><input id="f-addr" class="f">
+  <div class="row" style="margin-top:14px">
+   <button class="btn gh" onclick="closeModal('modal-customer')">إلغاء</button>
+   <button class="btn p" onclick="saveCustomer()">💾 حفظ</button>
+  </div>
+ </div>
+</div>
+
+<!-- مودال نتيجة الحفظ + واتساب -->
+<div class="modal" id="modal-result" onclick="if(event.target===this)closeModal('modal-result')">
+ <div class="sheet">
+  <h3 id="res-title">تم الحفظ ✅</h3>
+  <div id="res-body"></div>
+  <div class="msg-preview wa-msg" id="res-msg"></div>
+  <p class="m" style="margin-bottom:10px">هل تريد إرسال الإشعار للعميل عبر واتساب؟ (إرسال يدوي بموافقتك)</p>
+  <div class="row">
+   <button class="btn gh" onclick="closeModal('modal-result')">لاحقاً</button>
+   <button class="btn" style="background:#25d366;color:#fff" onclick="sendWa()">💬 إرسال عبر واتساب</button>
+  </div>
+ </div>
+</div>
+
+<!-- مودال تأكيد -->
+<div class="modal" id="modal-confirm" onclick="if(event.target===this)closeModal('modal-confirm')">
+ <div class="sheet">
+  <h3>تأكيد</h3>
+  <p id="confirm-text" style="font-size:14px;line-height:1.8"></p>
+  <div class="row" style="margin-top:14px">
+   <button class="btn gh" onclick="closeModal('modal-confirm')">إلغاء</button>
+   <button class="btn d" id="confirm-yes">تأكيد</button>
+  </div>
+ </div>
+</div>
+
+<!-- مودال تسجيل الدخول -->
+<div class="modal" id="modal-login" onclick="if(event.target===this)closeModal('modal-login')">
+ <div class="sheet">
+  <h3>تسجيل الدخول</h3>
+  <p id="fb-status" class="m" style="margin-bottom:10px"></p>
+  <button class="btn gh" style="width:100%" onclick="loginGoogle()">🔵 الدخول بحساب Google</button>
+  <div style="text-align:center;color:#94a3b8;margin:10px 0;font-size:12px">أو بالبريد الإلكتروني</div>
+  <input id="lg-email" class="f" type="email" dir="ltr" style="text-align:left" placeholder="email@example.com">
+  <input id="lg-pass" class="f" type="password" dir="ltr" style="text-align:left;margin-top:8px" placeholder="كلمة المرور">
+  <div class="row" style="margin-top:10px">
+   <button class="btn gh" onclick="emailLogin('in')">دخول</button>
+   <button class="btn s" onclick="emailLogin('up')">إنشاء حساب</button>
+  </div>
+  <button class="btn gh" style="width:100%;margin-top:8px" onclick="resetPass()">نسيت كلمة المرور؟</button>
+  <button class="btn gh" style="width:100%;margin-top:8px" onclick="closeModal('modal-login')">إغلاق</button>
+ </div>
+</div>
+
+<!-- شاشة القفل -->
+<div class="lock" id="lock">
+ <img src="icons/icon-192.png" alt="">
+ <h2 id="lock-title">التطبيق مقفل</h2>
+ <p class="m" style="color:#cbd5e1">استخدم البصمة أو كلمة المرور للدخول</p>
+ <button class="btn" style="background:#fff;color:var(--teal)" onclick="unlockFp()">🖐️ فتح بالبصمة</button>
+ <input id="lock-pass" type="password" class="f" dir="ltr" style="text-align:center;max-width:260px;background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)" placeholder="كلمة المرور">
+ <button class="btn" style="background:rgba(255,255,255,.2);color:#fff" onclick="unlockPass()">دخول</button>
+</div>
+
+<div id="print-area"></div>
+<div class="toast" id="toast"></div>
+<script>
+'use strict';
+/* ================= شبكة شباب نت — PWA أوفلاين بالكامل ================= */
+const DB_NAME='shabakaDB',DB_VER=1,DAY=86400000;
+let db,customers=[],transactions=[],settings={},currentCustomer=null,currentFilter='all',addMode='purchase',installEvt=null,pendingWa
